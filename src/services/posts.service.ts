@@ -5,9 +5,9 @@ const instance = axios.create({
 })
 
 export default class Posts {
-	async getPosts() {
+	async getUserPosts(id: number) {
 		try {
-			const response = await instance.get('/users/4/posts')
+			const response = await instance.get(`/users/${id}/posts`)
 			return response.data
 		} catch (err) {
 			throw new Error('Something went wrong')
