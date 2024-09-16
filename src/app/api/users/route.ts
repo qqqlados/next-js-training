@@ -1,12 +1,39 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { prisma } from '../../../../prisma/prisma-client'
+import { IRegistrationFormType } from '@/lib/interfaces/form.interface'
+import { IUser } from '@/lib/interfaces/user.interface'
+import { IAlbum } from '@/lib/interfaces/album.interface'
 
-export async function GET(req: NextRequest) {
-	const users = await prisma.user.findMany()
+export async function GET() {
+	try {
+		const users = await prisma.user.findMany()
 
-	console.log(req)
-
-	return NextResponse.json(users)
+		return NextResponse.json(users)
+	} catch (err) {
+		console.error(err)
+		return NextResponse.json(JSON.stringify({ message: 'Internal server error' }), { status: 500 })
+	}
 }
 
-export async function POST() {}
+export async function POST(request: Request) {
+	try {
+		const userData: IUser = await request.json()
+
+		console.log(userData)
+
+		const user = await prisma.user.create({
+			data: {
+				username: userData.username,
+				email: userData.email,
+				password: userData.password,
+			},
+		})
+
+		// console.log('User created:', user)
+
+		return NextResponse.json({ user }, { status: 201 })
+	} catch (err) {
+		console.error(err)
+		return NextResponse.json({ error: 'Failed to create user' }, { status: 500 })
+	}
+}
