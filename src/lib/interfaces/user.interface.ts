@@ -9,6 +9,7 @@ export interface IUser {
 	albums: IAlbum[]
 	name: string
 	username: string
+	password: string
 	email: string
 	phone: string
 	website: string

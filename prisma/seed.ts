@@ -6,11 +6,11 @@ async function up() {
 	const filePath = path.join(__dirname, '/json/photos.ts')
 
 	const jsonData = fs.readFileSync(filePath, 'utf-8')
-	const photos = JSON.parse(jsonData)
+	const items = JSON.parse(jsonData)
 
-	for (const photo of photos) {
+	for (const item of items) {
 		await prisma.photo.createMany({
-			data: photo,
+			data: item,
 		})
 	}
 
