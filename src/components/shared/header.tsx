@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function Header() {
+export function Header() {
 	return (
 		<header className=' w-full pb-5'>
 			<div className='w-[600px] mx-auto'>

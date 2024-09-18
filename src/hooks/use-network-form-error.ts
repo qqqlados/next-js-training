@@ -7,7 +7,7 @@ type Props = {
 	clearErrors: UseFormClearErrors<any>
 }
 
-export default function useNetworkFormError({ isError, setError, clearErrors }: Props) {
+export function useNetworkFormError({ isError, setError, clearErrors }: Props) {
 	useEffect(() => {
 		if (isError) {
 			setError('root', {

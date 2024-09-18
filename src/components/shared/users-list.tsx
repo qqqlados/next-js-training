@@ -1,9 +1,7 @@
 import { IUser } from '@/lib/interfaces/user.interface'
-import CardItem from './card-item'
-import UserBody from './user-body'
-import List from './list'
+import { CardItem, UserBody, List } from '@/components'
 
-export default async function UsersList() {
+export async function UsersList() {
 	const users: IUser[] = await fetch(`${process.env.NEXT_API_URL}/users`).then(res => res.json())
 
 	return (

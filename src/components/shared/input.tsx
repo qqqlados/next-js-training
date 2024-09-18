@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
 import '@/globals.css'
-import Loading from '@/app/(root)/feed/loading'
 
 type Props = {
 	text: string
@@ -12,7 +11,7 @@ type Props = {
 	className?: string
 }
 
-export default function Input({ text, placeholder, type, register, error, className }: Props) {
+export function Input({ text, placeholder, type, register, error, className }: Props) {
 	return (
 		<label className={clsx('form-control w-full mb-2 relative', className)}>
 			<div className='label'>

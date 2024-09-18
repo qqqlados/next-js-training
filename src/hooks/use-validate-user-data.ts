@@ -8,7 +8,7 @@ interface Props {
 	clearErrors: UseFormClearErrors<any>
 }
 
-export default function useValidateUserData({ isEmail, isUsername, setError, clearErrors }: Props) {
+export function useValidateUserData({ isEmail, isUsername, setError, clearErrors }: Props) {
 	useEffect(() => {
 		if (isEmail) {
 			setError('email', { type: 'custom', message: `Email already exists. Please, choose another email` })

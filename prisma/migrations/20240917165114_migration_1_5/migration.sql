@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Post" ALTER COLUMN "id" DROP DEFAULT;
+DROP SEQUENCE "Post_id_seq";

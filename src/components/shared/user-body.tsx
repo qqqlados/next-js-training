@@ -2,7 +2,7 @@ import { IUser } from '@/lib/interfaces/user.interface'
 import { CircleUserRound } from 'lucide-react'
 import Link from 'next/link'
 
-export default function UserBody({ user }: { user: IUser }) {
+export function UserBody({ user }: { user: IUser }) {
 	return (
 		<div className='cursor-default'>
 			<figure className='px-10 pt-10'>

@@ -29,8 +29,6 @@ export async function POST(request: Request) {
 			},
 		})
 
-		// console.log('User created:', user)
-
 		return NextResponse.json({ user }, { status: 201 })
 	} catch (err) {
 		console.error(err)
