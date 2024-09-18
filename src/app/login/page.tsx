@@ -1,5 +1,4 @@
-import Title from '@/components/shared/title'
-import RegistrationForm from '@/components/ui/registration-form'
+import { Title, RegistrationForm } from '@/components'
 
 export default function Registration() {
 	return (

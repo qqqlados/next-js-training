@@ -1,5 +1,5 @@
 import Loading from '@/app/loading-component'
-import UsersList from '@/components/shared/users-list'
+import { UsersList } from '@/components'
 import { Suspense } from 'react'
 
 export default async function Users() {

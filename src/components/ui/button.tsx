@@ -8,7 +8,7 @@ type Props = {
 	className?: string
 }
 
-export default function Button({ style, type, text, className, onClick }: Props) {
+export function Button({ style, type, text, className, onClick }: Props) {
 	return (
 		<>
 			{style == undefined && (

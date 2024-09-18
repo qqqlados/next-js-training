@@ -1,24 +1,20 @@
 'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { IRegistrationFormType, RegistrationFormSchema } from '@/lib/interfaces/form.interface'
+import { TRegistrationValues, RegistrationFormSchema } from '@/lib/interfaces/form.interface'
 import { zodResolver } from '@hookform/resolvers/zod'
-import InputSubmit from './input-submit'
-import { CookiesCheck } from '@/lib/utils/cookies'
-import { useCheckDatabase } from '@/hooks/use-check-database'
-import useDebounce from '@/lib/utils/debounce'
+import { InputSubmit } from '@/ui'
+import { CookiesCheck, useDebounce } from '@/lib/utils'
 import { useState } from 'react'
-import Input from '../shared/input'
+import { Input } from '@/components'
 import Loading from '@/app/loading-component'
-import useValidateUserData from '@/hooks/use-validate-user-data'
-import useNetworkFormError from '@/hooks/use-network-form-error'
+import { useCheckDatabase, useNetworkFormError, useValidateUserData, addUser } from '@/hooks'
 import { useRouter } from 'next/navigation'
-import { prisma } from '../../../prisma/prisma-client'
 import clsx from 'clsx'
 
-export default function RegistrationForm() {
+export function RegistrationForm() {
 	// prettier-ignore
-	const { register, handleSubmit, formState: { errors, isValid }, setError, clearErrors, watch } = useForm<IRegistrationFormType>({
+	const { register, handleSubmit, formState: { errors, isValid }, setError, clearErrors, watch } = useForm<TRegistrationValues>({
 		mode: 'onChange',
 		resolver: zodResolver(RegistrationFormSchema),
 	})
@@ -31,36 +27,10 @@ export default function RegistrationForm() {
 
 	const router = useRouter()
 
-	const onSubmit: SubmitHandler<IRegistrationFormType> = async data => {
-		// console.log(data)
-
-		try {
-			setLoading(true)
-			const response = await fetch(`http://localhost:3000/api/users`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					username: data.username,
-					email: data.email,
-					password: data.password,
-				}),
-			})
-
-			const result = await response.json()
-
-			if (response.ok) {
-				cookies.setUser(data)
-				router.push('/feed')
-			} else {
-				console.error('Error response:', result)
-			}
-		} catch (err) {
-			console.error(err)
-		} finally {
-			setLoading(false)
-		}
+	const onSubmit: SubmitHandler<TRegistrationValues> = async data => {
+		await addUser(data)
+		cookies.setUser(JSON.stringify(data))
+		router.push('/feed')
 	}
 
 	const email = watch('email')
@@ -76,7 +46,7 @@ export default function RegistrationForm() {
 	useNetworkFormError({ isError, setError, clearErrors })
 
 	return (
-		<form className={clsx('max-w-[400px] w-full mx-auto', loading && 'pointer-events-none')} onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
+		<form onSubmit={handleSubmit(onSubmit)} className={clsx('max-w-[400px] w-full mx-auto', loading && 'pointer-events-none')} autoComplete='off'>
 			<Input type='text' placeholder='example-user@gmail.com' text='Your email' register={register('email')} error={errors.email} />
 
 			<Input type='text' placeholder='rabbit-234' text='Your username' register={register('username')} error={errors.username} />

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { CookiesCheck } from '@/lib/utils/cookies'
+import { CookiesCheck } from '@/utils'
 import { useRouter } from 'next/navigation'
 
 export default function Index() {

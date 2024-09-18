@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import Loading from '../../loading-component'
-import PostsList from '@/components/shared/posts-list'
+import { PostsList } from '@/components'
 
 export default async function Feed() {
 	return (

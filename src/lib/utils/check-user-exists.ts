@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { CookiesCheck } from './cookies'
 import { useRouter } from 'next/navigation'
 
-export default function useCheckUser() {
+export function useCheckUser() {
 	const cookies = new CookiesCheck()
 
 	const user = cookies.getUser()

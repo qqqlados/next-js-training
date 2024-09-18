@@ -1,16 +1,9 @@
-import { IAlbum } from './album.interface'
-import { IPost } from './post.interface'
-import { ITodo } from './todo.interface'
-
 export interface IUser {
-	id: number
-	posts: IPost[]
-	todos: ITodo[]
-	albums: IAlbum[]
-	name: string
+	id?: number
+	name?: string
 	username: string
-	password: string
 	email: string
-	phone: string
-	website: string
+	password: string
+	phone?: string
+	website?: string
 }
