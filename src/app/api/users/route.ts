@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '../../../../prisma/prisma-client'
-import { IRegistrationFormType } from '@/lib/interfaces/form.interface'
 import { IUser } from '@/lib/interfaces/user.interface'
-import { IAlbum } from '@/lib/interfaces/album.interface'
 
 export async function GET() {
 	try {
