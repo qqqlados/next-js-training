@@ -4,7 +4,7 @@ import { prisma } from '../../../../../prisma/prisma-client'
 export async function GET(_req: Request, { params }: { params: { postId: string } }) {
 	try {
 		const posts = await prisma.post.findFirst({
-			where: { id: parseInt(params.postId) },
+			where: { id: params.postId },
 		})
 
 		if (posts) {

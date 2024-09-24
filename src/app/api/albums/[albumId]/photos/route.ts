@@ -4,7 +4,7 @@ import { prisma } from '../../../../../../prisma/prisma-client'
 export async function GET(_req: Request, { params }: { params: { albumId: string } }) {
 	try {
 		const photos = await prisma.photo.findMany({
-			where: { albumId: parseInt(params.albumId) },
+			where: { albumId: params.albumId },
 		})
 
 		if (photos.length > 0) {

@@ -4,7 +4,7 @@ import { prisma } from '../../../../../prisma/prisma-client'
 export async function GET(_req: Request, { params }: { params: { albumId: string } }) {
 	try {
 		const albumById = await prisma.album.findFirst({
-			where: { id: parseInt(params.albumId) },
+			where: { id: params.albumId },
 		})
 
 		if (albumById) {
