@@ -1,12 +1,11 @@
 import { IUser } from '@/lib/interfaces/user.interface'
 import { prisma } from '../../../../../prisma/prisma-client'
 import { NextResponse } from 'next/server'
-import { IRegistrationFormType } from '@/lib/interfaces/form.interface'
 
 export async function GET(_req: Request, { params }: { params: { userId: string } }) {
 	try {
 		const userById = await prisma.user.findFirst({
-			where: { id: parseInt(params.userId) },
+			where: { id: params.userId },
 		})
 		if (userById) {
 			return NextResponse.json(userById)
