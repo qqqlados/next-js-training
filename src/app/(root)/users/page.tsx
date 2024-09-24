@@ -7,9 +7,9 @@ export default function Users() {
 		<>
 			<h1 className='text-center mb-3'>Users</h1>
 			<div className='relative w-full h-[600px] overflow-y-auto px-3'>
-				{/* <Suspense fallback={<Loading />}>
+				<Suspense fallback={<Loading />}>
 					<UsersList />
-				</Suspense> */}
+				</Suspense>
 			</div>
 		</>
 	)

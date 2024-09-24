@@ -16,7 +16,7 @@ export default function UserLayout({
 		<div className='flex flex-col overflow-y-hidden'>
 			<Container>
 				<Header />
-				{/* <main className='px-10 w-full h-full'>{children}</main> */}
+				<main className='px-10 w-full h-full'>{children}</main>
 			</Container>
 		</div>
 	)
