@@ -1,31 +1,25 @@
 import { IUser } from '../lib/interfaces/user.interface'
 
 type Props = {
-	email?: string
-	username?: string
-	setIsEmail?: React.Dispatch<React.SetStateAction<string | undefined>>
-	setIsUsername?: React.Dispatch<React.SetStateAction<string | undefined>>
+	area?: string
+	setIsData?: React.Dispatch<React.SetStateAction<string | undefined>>
 	setLoading: React.Dispatch<React.SetStateAction<boolean>>
 	setIsError: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export async function useCheckDatabase({ email, username, setIsEmail, setIsUsername, setLoading, setIsError }: Props) {
+export async function useCheckDatabase({ area, setIsData, setLoading, setIsError }: Props) {
 	try {
 		setLoading(true)
 
 		const res: IUser[] = await fetch('/api/users').then(res => res.json())
 
-		const isEmail = res?.map(user => user?.email).find(item => item == email)
+		const isDataPresent = res?.map(user => user?.email).find(item => item == area)
 
-		if (setIsEmail) setIsEmail(isEmail)
-
-		const isUsername = res?.map(user => user?.username).find(item => item == username)
-
-		if (setIsUsername) setIsUsername(isUsername)
+		if (setIsData) setIsData(isDataPresent)
 
 		setIsError(false)
 
-		return { isEmail, isUsername }
+		return { isDataPresent }
 	} catch (e: any) {
 		setIsError(true)
 	} finally {

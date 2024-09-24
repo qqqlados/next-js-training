@@ -1,64 +1,66 @@
 'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { TRegistrationValues, RegistrationFormSchema } from '@/lib/interfaces/form.interface'
+import { RegistrationFormValues, RegistrationFormSchema } from '@/lib/interfaces/form.interface'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { InputSubmit } from '@/ui'
-import { CookiesCheck, useDebounce } from '@/lib/utils'
-import { useState } from 'react'
-import { Input } from '@/components'
-import Loading from '@/app/loading-component'
-import { useCheckDatabase, useNetworkFormError, useValidateUserData, addUser } from '@/hooks'
+import { FormError, FormInputSubmit } from '@/ui'
+import { CookiesCheck } from '@/lib/utils'
+import { FormInput } from '@/components'
+import { addUser } from '@/hooks'
 import { useRouter } from 'next/navigation'
-import clsx from 'clsx'
+import { FormProvider } from 'react-hook-form'
+import { useState } from 'react'
+import Loading from '@/app/loading-component'
 
 export function RegistrationForm() {
-	// prettier-ignore
-	const { register, handleSubmit, formState: { errors, isValid }, setError, clearErrors, watch } = useForm<TRegistrationValues>({
+	const form = useForm<RegistrationFormValues>({
 		mode: 'onChange',
 		resolver: zodResolver(RegistrationFormSchema),
+		defaultValues: {
+			email: '',
+			username: '',
+			password: '',
+			confirmPassword: '',
+		},
 	})
-	const [isEmail, setIsEmail] = useState<string | undefined>()
-	const [isUsername, setIsUsername] = useState<string | undefined>()
+
 	const [loading, setLoading] = useState(false)
-	const [isError, setIsError] = useState<boolean>(false)
 
 	const cookies = new CookiesCheck()
 
 	const router = useRouter()
 
-	const onSubmit: SubmitHandler<TRegistrationValues> = async data => {
+	const onSubmit: SubmitHandler<RegistrationFormValues> = async data => {
+		setLoading(true)
+
 		await addUser(data)
-		cookies.setUser(JSON.stringify(data))
+
+		cookies.setUser(data.email)
+
 		router.push('/feed')
 	}
 
-	const email = watch('email')
-
-	const username = watch('username')
-
-	useDebounce(email, () => useCheckDatabase({ email, setIsEmail, setLoading, setIsError }), 900)
-
-	useDebounce(username, () => useCheckDatabase({ username, setIsUsername, setLoading, setIsError }), 900)
-
-	useValidateUserData({ isEmail, isUsername, setError, clearErrors })
-
-	useNetworkFormError({ isError, setError, clearErrors })
-
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className={clsx('max-w-[400px] w-full mx-auto', loading && 'pointer-events-none')} autoComplete='off'>
-			<Input type='text' placeholder='example-user@gmail.com' text='Your email' register={register('email')} error={errors.email} />
+		<FormProvider {...form}>
+			<form onSubmit={form.handleSubmit(onSubmit)} className='relative max-w-[400px] w-full mx-auto' autoComplete='off'>
+				<FormInput type='text' name='email' text='Your email' placeholder='example-user@gmail.com' shouldCheckDatabase={true} />
 
-			<Input type='text' placeholder='rabbit-234' text='Your username' register={register('username')} error={errors.username} />
+				<FormInput type='text' name='username' text='Your username' placeholder='rabbit-234' shouldCheckDatabase={true} />
 
-			<Input type='password' text='Your password' register={register('password')} error={errors.password} />
+				<FormInput type='password' name='password' text='Your password' />
 
-			<Input type='password' text='Repeat password' register={register('confirmPassword')} error={errors.confirmPassword} />
+				<FormInput type='password' name='confirmPassword' text='Repeat your password' />
 
-			<InputSubmit text='Registrate new user' className='text-white mt-4' disabled={isValid && Object.keys(errors).length == 0 ? false : true} />
-			{loading && <Loading />}
+				<FormInputSubmit text='Registrate new user' className='text-white mt-4' />
 
-			{errors.root && <p className='text-red-500 text-center mt-3'>{errors.root.message}</p>}
-		</form>
+				{form.formState.errors.root && <FormError text={form.formState.errors.root?.message?.toString()} className='text-lg' />}
+
+				{loading && (
+					<div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(0,0,0,0.1)] z-10 backdrop-blur'>
+						<Loading />
+					</div>
+				)}
+			</form>
+		</FormProvider>
 	)
 }

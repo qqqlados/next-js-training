@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie'
-import { IRegistrationFormType } from '../interfaces/form.interface'
+import { RegistrationFormValues } from '../interfaces/form.interface'
 
 export class CookiesCheck {
-	setUser(userData: IRegistrationFormType) {
-		Cookies.set('User', JSON.stringify(userData))
+	setUser(email: string) {
+		Cookies.set('User', email)
 	}
 
 	getUser() {

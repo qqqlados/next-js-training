@@ -22,4 +22,4 @@ export const RegistrationFormSchema = z
 		path: ['confirmPassword'],
 	})
 
-export type TRegistrationValues = z.infer<typeof RegistrationFormSchema>
+export type RegistrationFormValues = z.infer<typeof RegistrationFormSchema>

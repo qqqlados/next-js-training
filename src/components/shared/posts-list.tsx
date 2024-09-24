@@ -3,7 +3,7 @@ import { IPost } from '@/lib/interfaces/post.interface'
 
 export async function PostsList() {
 	const posts: IPost[] = await fetch(`${process.env.NEXT_API_URL}/posts`, {
-		cache: 'no-cache',
+		cache: 'no-store',
 	}).then(res => res.json())
 
 	return (

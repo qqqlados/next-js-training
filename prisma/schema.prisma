@@ -7,27 +7,57 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model LikedPost {
+  id String @id @default(cuid())
+
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String @unique
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@unique([postId, userId])
+}
+
+model DislikedPost {
+  id String @id @default(cuid())
+
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String @unique
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@unique([postId, userId])
+}
+
 model Post {
-  id       String   @id @default(cuid())
-  userId   String
-  tags     String[] @default([])
-  title    String
-  body     String
-  likes    Int      @default(0)
-  dislikes Int      @default(0)
-  user     User     @relation(fields: [userId], references: [id])
+  id             String        @id @default(cuid())
+  userId         String
+  tags           String[]      @default([])
+  title          String
+  body           String
+  likes          Int           @default(0)
+  dislikes       Int           @default(0)
+  user           User          @relation(fields: [userId], references: [id])
+  likedPost      LikedPost?
+  likedPostId    String?       @unique
+  dislikedPost   DislikedPost?
+  dislikedPostId String?       @unique
 }
 
 model User {
-  id       String  @id @default(cuid())
-  name     String?
-  username String
-  email    String  @unique
-  phone    String?
-  website  String?
-  password String  @default("default_password")
-  albums   Album[]
-  posts    Post[]
+  id            String         @id @default(cuid())
+  name          String?
+  username      String
+  email         String         @unique
+  phone         String?
+  website       String?
+  password      String         @default("default_password")
+  albums        Album[]
+  posts         Post[]
+  likedPosts    LikedPost[]
+  dislikedPosts DislikedPost[]
 }
 
 model Photo {

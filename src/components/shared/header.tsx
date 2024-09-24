@@ -19,14 +19,6 @@ export function Header() {
 								Users
 							</Link>
 						</li>
-						<li className='mr-3'>
-							<Link
-								className='inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3'
-								href='/my-profile'
-							>
-								My profile
-							</Link>
-						</li>
 					</ul>
 				</nav>
 			</div>
