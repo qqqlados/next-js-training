@@ -2,14 +2,14 @@ import { Suspense } from 'react'
 import Loading from '../../loading-component'
 import { PostsList } from '@/components'
 
-export default async function Feed() {
+export default function Feed() {
 	return (
 		<>
 			<h1 className='text-center mb-3'>Posts</h1>
 			<div className='relative w-full h-[600px] overflow-y-auto px-3'>
-				<Suspense fallback={<Loading />}>
+				{/* <Suspense fallback={<Loading />}>
 					<PostsList />
-				</Suspense>
+				</Suspense> */}
 			</div>
 		</>
 	)
