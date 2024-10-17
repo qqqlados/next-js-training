@@ -9,8 +9,6 @@ export function useCheckUser() {
 
 	const user = cookies.getUser()
 
-	// const parsedUser = JSON.parse(user!)
-
 	const router = useRouter()
 
 	useEffect(() => {

@@ -1,38 +1,31 @@
 'use client'
 
 import { addDislike, getCurrentUserId, removeDislike } from '@/hooks/actions'
+import { useLikeDislikeContext } from '@/lib/contexts/like-dislike-context'
 import { IPost } from '@/lib/interfaces/post.interface'
-import { useCheckUser, useDebounceClickingLikes } from '@/lib/utils'
+import { useDebounceClickingLikes } from '@/lib/utils'
 import { ThumbsDown } from 'lucide-react'
 import { useState } from 'react'
 
-export function DislikeButton({ post, isActive }: { post: IPost; isActive?: null | string }) {
-	const [dislike, setDislike] = useState({
-		value: post?.dislikes,
-		active: Boolean(isActive),
-	})
+export function DislikeButton({ userEmail, post }: { userEmail?: string; post: IPost }) {
+	const { isDisliked, toggleDislike, dislikes, isInitiallyDisliked } = useLikeDislikeContext()
 
 	const [action, setAction] = useState<boolean | null>(null)
 
 	async function handleClick() {
 		setAction(prev => (prev === null ? true : !prev))
 
-		setDislike(prev => ({
-			active: !prev.active,
-			value: prev.active == false ? prev.value + 1 : prev.value - 1,
-		}))
+		toggleDislike()
 	}
-
-	const { user } = useCheckUser()
 
 	useDebounceClickingLikes(
 		action,
 		async () => {
-			const userIdObject = await getCurrentUserId(user)
+			const userId = await getCurrentUserId(userEmail)
 
-			if (Boolean(isActive) !== dislike.active) {
-				if (dislike.active) {
-					await addDislike(post.id, userIdObject?.userId!)
+			if (isDisliked !== isInitiallyDisliked) {
+				if (isDisliked) {
+					await addDislike(post.id, userId!)
 				} else {
 					await removeDislike(post.id)
 				}
@@ -43,9 +36,9 @@ export function DislikeButton({ post, isActive }: { post: IPost; isActive?: null
 
 	return (
 		<span className='flex gap-1 items-center'>
-			{dislike.value}
+			{dislikes}
 			<button onClick={() => handleClick()} className='active:scale-90'>
-				<ThumbsDown fill={dislike.active ? '#e17158' : '#fff'} />
+				<ThumbsDown fill={isDisliked ? '#e17158' : '#fff'} />
 			</button>
 		</span>
 	)

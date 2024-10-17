@@ -1,37 +1,31 @@
 'use client'
 
-import { addLike, removeLike, getCurrentUserId } from '@/hooks/actions'
+import { addLike, removeLike, getCurrentUserId, isPostLiked } from '@/hooks/actions'
+import { useLikeDislikeContext } from '@/lib/contexts/like-dislike-context'
 import { IPost } from '@/lib/interfaces/post.interface'
-import { useCheckUser, useDebounceClickingLikes } from '@/lib/utils'
+import { useDebounceClickingLikes } from '@/lib/utils'
 import { ThumbsUp } from 'lucide-react'
 import { useState } from 'react'
 
-export function LikeButton({ post, isActive }: { post: IPost; isActive?: null | string }) {
-	const [like, setLike] = useState({
-		active: Boolean(isActive),
-		value: post?.likes,
-	})
+export function LikeButton({ userEmail, post }: { userEmail?: string; post: IPost }) {
 	const [action, setAction] = useState<boolean | null>(null)
+
+	const { isLiked, toggleLike, likes, isInitiallyLiked } = useLikeDislikeContext()
 
 	async function handleClick() {
 		setAction(prev => (prev === null ? true : !prev))
 
-		setLike(prev => ({
-			active: !prev.active,
-			value: prev.active == false ? prev.value + 1 : prev.value - 1,
-		}))
+		toggleLike()
 	}
-
-	const { user } = useCheckUser()
 
 	useDebounceClickingLikes(
 		action,
 		async () => {
-			const userIdObject = await getCurrentUserId(user)
+			const userId = await getCurrentUserId(userEmail)
 
-			if (Boolean(isActive) !== like.active) {
-				if (like.active) {
-					await addLike(post.id, userIdObject?.userId!)
+			if (isLiked !== isInitiallyLiked) {
+				if (isLiked) {
+					await addLike(post.id, userId!)
 				} else {
 					await removeLike(post.id)
 				}
@@ -42,9 +36,9 @@ export function LikeButton({ post, isActive }: { post: IPost; isActive?: null | 
 
 	return (
 		<span className='flex gap-1 items-center'>
-			{like.value}
-			<button onClick={e => handleClick()} className='active:scale-90'>
-				<ThumbsUp fill={like.active ? '#e17158' : '#fff'} />
+			{likes}
+			<button onClick={() => handleClick()} className='active:scale-90'>
+				<ThumbsUp fill={isLiked ? '#e17158' : '#fff'} />
 			</button>
 		</span>
 	)

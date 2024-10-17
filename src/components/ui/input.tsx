@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import '@/globals.css'
+import { useFormContext } from 'react-hook-form'
 
 type Props = {
 	label?: string
@@ -18,5 +19,3 @@ export function Input({ label, type, placeholder, className }: Props) {
 		</label>
 	)
 }
-
-// export

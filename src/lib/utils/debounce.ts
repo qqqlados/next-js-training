@@ -1,5 +1,6 @@
+'use client'
+
 import { useEffect } from 'react'
-import { boolean } from 'zod'
 
 export function useDebounce(value: any, callback: () => void, delay: number) {
 	useEffect(() => {

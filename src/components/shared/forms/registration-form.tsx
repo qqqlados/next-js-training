@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import { FormProvider } from 'react-hook-form'
 import { useState } from 'react'
 import Loading from '@/app/loading-component'
+import Link from 'next/link'
 
 export function RegistrationForm() {
 	const form = useForm<RegistrationFormValues>({
@@ -43,15 +44,35 @@ export function RegistrationForm() {
 	return (
 		<FormProvider {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className='relative max-w-[400px] w-full mx-auto' autoComplete='off'>
-				<FormInput type='text' name='email' text='Your email' placeholder='example-user@gmail.com' shouldCheckDatabase={true} />
+				<FormInput
+					type='text'
+					name='email'
+					text='Your email'
+					placeholder='example-user@gmail.com'
+					shouldCheckDatabase={true}
+					customErrorMessage='Email already exists. Please, choose another $email'
+				/>
 
-				<FormInput type='text' name='username' text='Your username' placeholder='rabbit-234' shouldCheckDatabase={true} />
+				<FormInput
+					type='text'
+					name='username'
+					text='Your username'
+					placeholder='rabbit-234'
+					shouldCheckDatabase={true}
+					customErrorMessage='Username already exists. Please, choose another username'
+				/>
 
 				<FormInput type='password' name='password' text='Your password' />
 
 				<FormInput type='password' name='confirmPassword' text='Repeat your password' />
 
-				<FormInputSubmit text='Registrate new user' className='text-white mt-4' />
+				<div className='flex items-center justify-between'>
+					<FormInputSubmit text='Registrate new user' className='text-white mt-4' />
+
+					<Link href='/login' className='underline'>
+						Registered? Log in
+					</Link>
+				</div>
 
 				{form.formState.errors.root && <FormError text={form.formState.errors.root?.message?.toString()} className='text-lg' />}
 

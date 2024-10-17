@@ -1,5 +1,3 @@
-import { IUser } from './user.interface'
-
 export interface IPost {
 	id: string
 	userId: number
