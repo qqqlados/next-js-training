@@ -8,14 +8,14 @@ export function UserBody({ user }: { user: IUser }) {
 			<figure className='px-10 pt-10'>
 				<CircleUserRound width={90} height={100} strokeWidth={2} />
 			</figure>
-			<div className='card-body items-center text-center'>
+			<div className='card-body items-center text-center py-0'>
 				<h2 className='card-title'>{user?.username}</h2>
 				<p>{user?.email}</p>
-				{/* <div className='card-actions'>
-					<Link href={`/user/${user?.id}`}>
-						<button className='btn btn-primary'>See Details</button>
+				<div className='card-actions'>
+					<Link href={`/users/${user?.id}`}>
+						<button className='btn btn-primary'>See more</button>
 					</Link>
-				</div> */}
+				</div>
 			</div>
 		</div>
 	)

@@ -2,6 +2,10 @@
 
 import { IUser } from '@/lib/interfaces/user.interface'
 import { prisma } from '../../prisma/prisma-client'
+import { revalidateTag } from 'next/cache'
+import { RegistrationFormValues } from '@/lib/interfaces/form.interface'
+import { API_URL } from '@/app/config'
+import { IPost } from '@/lib/interfaces/post.interface'
 
 export async function getCurrentUserId(userEmail: string | undefined) {
 	try {
@@ -16,13 +20,37 @@ export async function getCurrentUserId(userEmail: string | undefined) {
 
 		const userId = user?.id
 
-		return { userId }
+		return userId
 	} catch (e) {
 		console.error(e)
 	}
 }
 
-export async function addUser(data: IUser) {
+export async function getUsernameByPostId(userId?: string) {
+	try {
+		const user = await prisma.user.findFirst({
+			where: { id: userId },
+		})
+
+		return user
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+export async function getPostsInModal() {
+	try {
+		const posts: IPost[] = await fetch(`${API_URL}/posts`).then(res => res.json())
+
+		return { posts: posts || [] }
+	} catch (err) {
+		console.error(err)
+
+		return { posts: [] }
+	}
+}
+
+export async function addUser(data: RegistrationFormValues) {
 	try {
 		await prisma.user.create({
 			data: {
@@ -38,7 +66,7 @@ export async function addUser(data: IUser) {
 	}
 }
 
-export async function isPostLiked(postId: string) {
+export async function isPostLiked(postId: string | undefined) {
 	try {
 		const isLiked = await prisma.likedPost.findFirst({
 			where: {
@@ -46,13 +74,13 @@ export async function isPostLiked(postId: string) {
 			},
 		})
 
-		return { isLiked }
+		return isLiked!.id
 	} catch (e) {
 		console.error(e)
 	}
 }
 
-export async function isPostDisliked(postId: string) {
+export async function isPostDisliked(postId: string | undefined) {
 	try {
 		const isDisliked = await prisma.dislikedPost.findFirst({
 			where: {
@@ -60,7 +88,7 @@ export async function isPostDisliked(postId: string) {
 			},
 		})
 
-		return { isDisliked }
+		return isDisliked!.id
 	} catch (e) {
 		console.error(e)
 	}
@@ -77,6 +105,14 @@ export async function addLike(postId: string, userId: string) {
 
 		const data = await isPostDisliked(postId)
 
+		if (data) {
+			await prisma.dislikedPost.delete({
+				where: {
+					postId: postId,
+				},
+			})
+		}
+
 		await prisma.post.update({
 			where: {
 				id: postId,
@@ -84,9 +120,11 @@ export async function addLike(postId: string, userId: string) {
 			data: {
 				likes: { increment: 1 },
 				likedPostId: newLikedPost?.id,
-				...(data?.isDisliked?.id ? { dislikes: { decrement: 1 } } : null),
+				...(data ? { dislikes: { decrement: 1 } } : null),
 			},
 		})
+
+		revalidateTag(`post-${postId}`)
 	} catch (e) {
 		console.error(e)
 	}
@@ -109,6 +147,7 @@ export async function removeLike(postId: string) {
 				likedPostId: null,
 			},
 		})
+		revalidateTag(`posts`)
 	} catch (e) {
 		console.error(e)
 	}
@@ -125,6 +164,14 @@ export async function addDislike(postId: string, userId: string) {
 
 		const data = await isPostLiked(postId)
 
+		if (data) {
+			await prisma.likedPost.delete({
+				where: {
+					postId: postId,
+				},
+			})
+		}
+
 		await prisma.post.update({
 			where: {
 				id: postId,
@@ -132,9 +179,10 @@ export async function addDislike(postId: string, userId: string) {
 			data: {
 				dislikes: { increment: 1 },
 				dislikedPostId: newDislikedPost?.id,
-				...(data?.isLiked?.id ? { likes: { decrement: 1 } } : null),
+				...(data ? { likes: { decrement: 1 } } : null),
 			},
 		})
+		revalidateTag(`posts`)
 	} catch (e) {
 		console.error(e)
 	}
@@ -157,7 +205,63 @@ export async function removeDislike(postId: string) {
 				dislikedPostId: null,
 			},
 		})
+		revalidateTag(`posts`)
 	} catch (e) {
 		console.error(e)
+	}
+}
+
+export async function addPost({ userId, title, body }: { userId: string; title: string; body: string }) {
+	try {
+		const createdPost = await prisma.post.create({
+			data: {
+				userId: userId,
+				title: title,
+				body: body,
+				tags: [],
+			},
+		})
+
+		revalidateTag('posts')
+
+		return createdPost
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+export async function updatePost({ postId, userId, title, body }: { postId?: string; userId?: string; title: string; body: string }) {
+	try {
+		const updatedPost = await prisma.post.update({
+			where: {
+				id: postId,
+			},
+			data: {
+				userId: userId,
+				title: title,
+				body: body,
+				tags: [],
+			},
+		})
+
+		revalidateTag(`post-${postId}`)
+
+		return updatedPost
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+export async function deletePost(postId?: string) {
+	try {
+		await prisma.post.delete({
+			where: {
+				id: postId,
+			},
+		})
+
+		revalidateTag('posts')
+	} catch (err) {
+		console.error(err)
 	}
 }

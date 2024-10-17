@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import { CookiesCheck } from '@/utils'
 import { useRouter } from 'next/navigation'
+import { CookiesCheck } from '@/lib/utils'
 
 export default function Index() {
 	const cookies = new CookiesCheck()
@@ -13,7 +13,7 @@ export default function Index() {
 
 	useEffect(() => {
 		if (!user) {
-			router.push('/login')
+			router.push('/register')
 		} else {
 			router.push('/feed')
 		}

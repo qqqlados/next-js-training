@@ -1,4 +1,5 @@
-import { Title, RegistrationForm } from '@/components'
+import { Title } from '@/components'
+import { RegistrationForm } from '@/components/shared/forms'
 
 export default function Registration() {
 	return (

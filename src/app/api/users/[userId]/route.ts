@@ -17,23 +17,3 @@ export async function GET(_req: Request, { params }: { params: { userId: string 
 		return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
 	}
 }
-
-// export async function POST(_req, { user} : {user: IRegistrationFormType}) {
-// 	try {
-// 		const currentUser = await prisma.user.create({
-// 			data: {
-// 				username: user.username,
-// 				email: user.email,
-
-// 			}
-// 		})
-// 		if (userById) {
-// 			return NextResponse.json(userById)
-// 		} else {
-// 			return NextResponse.json({ message: 'User not found' }, { status: 404 })
-// 		}
-// 	} catch (err) {
-// 		console.error(err)
-// 		return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
-// 	}
-// }

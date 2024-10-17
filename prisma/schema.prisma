@@ -10,7 +10,7 @@ datasource db {
 model LikedPost {
   id String @id @default(cuid())
 
-  post   Post   @relation(fields: [postId], references: [id])
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId String @unique
 
   user   User   @relation(fields: [userId], references: [id])
@@ -22,7 +22,7 @@ model LikedPost {
 model DislikedPost {
   id String @id @default(cuid())
 
-  post   Post   @relation(fields: [postId], references: [id])
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId String @unique
 
   user   User   @relation(fields: [userId], references: [id])

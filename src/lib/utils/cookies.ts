@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie'
-import { RegistrationFormValues } from '../interfaces/form.interface'
 
 export class CookiesCheck {
 	setUser(email: string) {
