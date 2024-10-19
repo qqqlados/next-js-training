@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 import { useFormContext } from 'react-hook-form'
 

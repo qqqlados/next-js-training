@@ -1,6 +1,7 @@
+'use client'
+
 import '@/globals.css'
 import { useFormContext } from 'react-hook-form'
-import { useEffect } from 'react'
 import clsx from 'clsx'
 
 type Props = {
