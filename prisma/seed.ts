@@ -3,13 +3,13 @@ import { prisma } from './prisma-client'
 import fs from 'fs'
 
 async function up() {
-	const filePath = path.join(__dirname, '/json/photos.ts')
+	const filePath = path.join(__dirname, '/json/users.ts')
 
 	const jsonData = fs.readFileSync(filePath, 'utf-8')
 	const items = JSON.parse(jsonData)
 
 	for (const item of items) {
-		await prisma.photo.createMany({
+		await prisma.user.createMany({
 			data: item,
 		})
 	}
@@ -18,7 +18,7 @@ async function up() {
 }
 
 async function down() {
-	await prisma.$executeRaw`TRUNCATE TABLE "Photo" RESTART IDENTITY CASCADE`
+	await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`
 }
 
 async function main() {
