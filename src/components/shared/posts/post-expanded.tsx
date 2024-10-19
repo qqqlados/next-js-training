@@ -9,13 +9,10 @@ import { PostBottomRow } from './post-bottom-row'
 
 export async function PostExpanded({ postId, userEmail }: { postId?: string; userEmail?: string }) {
 	const post: IPost = await fetch(`${API_URL}/posts/${postId}`, {
-		cache: 'no-store',
 		next: {
 			tags: [`post-${postId}`],
 		},
 	}).then(res => res.json())
-
-	// console.log(post)
 
 	if (!post || !post.userId) {
 		return <p className='mt-40 text-lg'>Post not found or user information is missing.</p>

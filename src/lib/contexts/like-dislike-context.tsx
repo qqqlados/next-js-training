@@ -49,7 +49,7 @@ export function LikeDislikeProvider({
 	function toggleDislike() {
 		setIsDisliked(prev => !prev)
 
-		setDislikes(isDisliked == false ? prev => prev! + 1 : prev => prev! - 1)
+		setDislikes(isDisliked == false ? prev => prev! + 1 : dislikes! > 0 ? prev => prev! - 1 : undefined)
 
 		if (isLiked) {
 			setIsLiked(false)

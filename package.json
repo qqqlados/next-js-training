@@ -24,6 +24,7 @@
 		"axios": "^1.7.7",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
+		"cookies-next": "^4.3.0",
 		"fs": "^0.0.1-security",
 		"js-cookie": "^3.0.5",
 		"lodash": "^4.17.21",
