@@ -54,25 +54,7 @@ model User {
   phone         String?
   website       String?
   password      String         @default("default_password")
-  albums        Album[]
   posts         Post[]
   likedPosts    LikedPost[]
   dislikedPosts DislikedPost[]
-}
-
-model Photo {
-  id           String @id @default(cuid())
-  albumId      String
-  title        String
-  url          String @unique
-  thumbnailUrl String @unique
-  album        Album  @relation(fields: [albumId], references: [id])
-}
-
-model Album {
-  id     String  @id @default(cuid())
-  userId String
-  title  String
-  user   User    @relation(fields: [userId], references: [id])
-  photos Photo[]
 }

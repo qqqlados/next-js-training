@@ -8,7 +8,7 @@ import { FormInputSubmit, FormError } from '@/components/ui'
 import { addUser } from '@/hooks'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useCheckRegister } from '@/hooks/use-check-database'
+import { useCheckRegister } from '@/hooks'
 import Loading from '@/app/loading-component'
 import Link from 'next/link'
 
