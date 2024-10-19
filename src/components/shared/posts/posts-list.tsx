@@ -15,13 +15,13 @@ export async function PostsList({
 	userId?: string
 	flex?: boolean
 }) {
-	let url = `${API_URL}/posts`
+	let url = `${process.env.NEXT_API_URL}/posts`
 
-	if (searchValue) url = `${API_URL}/posts?searchValue=${searchValue}`
+	if (searchValue) url = `${process.env.NEXT_API_URL}/posts?searchValue=${searchValue}`
 
-	if (emailParam) url = `${API_URL}/myPosts/${emailParam}`
+	if (emailParam) url = `${process.env.NEXT_API_URL}/myPosts/${emailParam}`
 
-	if (userId) url = `${API_URL}/userPosts/${userId}`
+	if (userId) url = `${process.env.NEXT_API_URL}/userPosts/${userId}`
 
 	const posts: IPost[] = await fetch(url, {
 		cache: 'no-store',

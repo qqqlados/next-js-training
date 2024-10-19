@@ -8,7 +8,7 @@ import { Suspense } from 'react'
 import { PostBottomRow } from './post-bottom-row'
 
 export async function PostExpanded({ postId, userEmail }: { postId?: string; userEmail?: string }) {
-	const post: IPost = await fetch(`${API_URL}/posts/${postId}`, {
+	const post: IPost = await fetch(`${process.env.NEXT_API_URL}/posts/${postId}`, {
 		next: {
 			tags: [`post-${postId}`],
 		},
