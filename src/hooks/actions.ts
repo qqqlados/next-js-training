@@ -68,7 +68,7 @@ export async function getUsernameByPostId(userId?: string) {
 
 export async function getPostsInModal() {
 	try {
-		const posts: IPost[] = await fetch(`${process.env.NEXT_API_URL}/posts`).then(res => res.json())
+		const posts: IPost[] = await fetch(`${API_URL}/posts`).then(res => res.json())
 
 		return { posts: posts || [] }
 	} catch (err) {
