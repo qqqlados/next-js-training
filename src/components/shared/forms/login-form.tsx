@@ -5,7 +5,7 @@ import { LoginFormSchema, LoginFormValues } from '@/lib/interfaces/form.interfac
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { FormInput } from '../form-input'
-import { useCheckLogin } from '@/hooks/use-check-database'
+import { useCheckLogin } from '@/hooks'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Loading from '@/app/loading-component'
