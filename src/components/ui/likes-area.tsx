@@ -1,5 +1,4 @@
 import { isPostDisliked, isPostLiked } from '@/hooks/actions'
-import { DislikeButton, LikeButton } from '../shared'
 import { IPost } from '@/lib/interfaces/post.interface'
 import LikeDislikeActions from '@/lib/contexts/like-dislike-actions'
 

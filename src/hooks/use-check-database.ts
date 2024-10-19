@@ -1,28 +1,66 @@
-import { IUser } from '../lib/interfaces/user.interface'
+import { FieldValues, UseFormSetError } from 'react-hook-form'
+import { IUser } from '@/lib/interfaces/user.interface'
+import { LoginFormValues } from '@/lib/interfaces/form.interface'
+import { getUserCredentials, getUsers } from './actions'
 
 type Props = {
-	area?: string
-	setIsData?: React.Dispatch<React.SetStateAction<string | undefined>>
-	setLoading: React.Dispatch<React.SetStateAction<boolean>>
-	setIsError: React.Dispatch<React.SetStateAction<boolean>>
+	name: string
+	value: string
+	setError: UseFormSetError<any>
 }
 
-export async function useCheckDatabase({ area, setIsData, setLoading, setIsError }: Props) {
+export async function useCheckRegister({ name, value, setError }: Props) {
 	try {
-		setLoading(true)
+		const users = await getUsers()
 
-		const res: IUser[] = await fetch('/api/users').then(res => res.json())
+		const isDataPresent = users?.find(user => user?.email === value || user?.username === value)
 
-		const isDataPresent = res?.map(user => user?.email).find(item => item == area)
-
-		if (setIsData) setIsData(isDataPresent)
-
-		setIsError(false)
-
-		return { isDataPresent }
+		if (isDataPresent) {
+			setError(name, { type: 'manual', message: `${name.charAt(0).toUpperCase() + name.slice(1)} already exists` })
+		}
 	} catch (e: any) {
-		setIsError(true)
-	} finally {
-		setLoading(false)
+		console.error(e)
+	}
+}
+
+export async function useCheckLogin({
+	name,
+	email,
+	password,
+	setError,
+	userIsPresent,
+}: {
+	name: 'email' | 'password'
+	email?: string
+	password?: string
+	setError: UseFormSetError<LoginFormValues>
+	userIsPresent:
+		| {
+				email: string
+				password: string
+		  }
+		| null
+		| undefined
+}) {
+	try {
+		// const user = res?.find(user => user?.email === email)
+		if (!userIsPresent) {
+			if (name === 'email') {
+				setError('email', { type: 'manual', message: 'Email not found' })
+			} else if (name === 'password') {
+				setError('password', { type: 'manual', message: 'Incorrect password' })
+			}
+			return
+		}
+
+		if (email && email !== userIsPresent!.email) {
+			setError(name, { type: 'manual', message: `Email not found` })
+		}
+
+		if (password && password !== userIsPresent!.password) {
+			setError(name, { type: 'manual', message: `Incorrect password` })
+		}
+	} catch (e: any) {
+		console.error(e)
 	}
 }

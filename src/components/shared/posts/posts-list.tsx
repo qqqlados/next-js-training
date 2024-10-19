@@ -30,8 +30,6 @@ export async function PostsList({
 		},
 	}).then(res => res.json())
 
-	console.log(posts)
-
 	return (
 		<>
 			{posts.length > 0 ? (

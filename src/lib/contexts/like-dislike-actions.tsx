@@ -19,8 +19,8 @@ export default function LikeDislikeActions({
 		<LikeDislikeProvider
 			isInitiallyLiked={isLikeActive}
 			isInitiallyDisliked={isDislikeActive}
-			likesCount={post?.likes}
-			dislikesCount={post?.dislikes}
+			likesCount={post?.likes > 0 ? post?.likes : 0}
+			dislikesCount={post?.dislikes > 0 ? post?.dislikes : 0}
 		>
 			<div className='flex items-center gap-3'>
 				<LikeButton userEmail={userEmail} post={post} />

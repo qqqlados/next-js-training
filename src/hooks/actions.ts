@@ -1,11 +1,39 @@
 'use server'
 
-import { IUser } from '@/lib/interfaces/user.interface'
 import { prisma } from '../../prisma/prisma-client'
 import { revalidateTag } from 'next/cache'
 import { RegistrationFormValues } from '@/lib/interfaces/form.interface'
 import { API_URL } from '@/app/config'
 import { IPost } from '@/lib/interfaces/post.interface'
+
+export async function getUsers() {
+	try {
+		const users = await prisma.user.findMany()
+
+		return users
+	} catch (err) {
+		console.error(err)
+	}
+}
+
+export async function getUserCredentials({ email }: { email?: string }) {
+	try {
+		const userIsPresent = await prisma.user.findUnique({
+			where: {
+				email,
+			},
+			select: {
+				email: true,
+				password: true,
+			},
+		})
+
+		return userIsPresent
+	} catch (err) {
+		// return { message: 'Network error' }
+		console.error(err)
+	}
+}
 
 export async function getCurrentUserId(userEmail: string | undefined) {
 	try {
@@ -147,7 +175,8 @@ export async function removeLike(postId: string) {
 				likedPostId: null,
 			},
 		})
-		revalidateTag(`posts`)
+
+		revalidateTag(`post-${postId}`)
 	} catch (e) {
 		console.error(e)
 	}
@@ -182,7 +211,8 @@ export async function addDislike(postId: string, userId: string) {
 				...(data ? { likes: { decrement: 1 } } : null),
 			},
 		})
-		revalidateTag(`posts`)
+
+		revalidateTag(`post-${postId}`)
 	} catch (e) {
 		console.error(e)
 	}
@@ -205,7 +235,8 @@ export async function removeDislike(postId: string) {
 				dislikedPostId: null,
 			},
 		})
-		revalidateTag(`posts`)
+
+		revalidateTag(`post-${postId}`)
 	} catch (e) {
 		console.error(e)
 	}
