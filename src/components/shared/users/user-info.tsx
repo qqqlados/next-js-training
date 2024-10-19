@@ -3,7 +3,7 @@ import { IUser } from '@/lib/interfaces/user.interface'
 import { CircleUserRound } from 'lucide-react'
 
 export async function UserInfo({ userId }: { userId: string }) {
-	const user: IUser = await fetch(`${process.env.NEXT_API_URL}/users/${userId}`).then(res => res.json())
+	const user: IUser = await fetch(`${API_URL}/users/${userId}`).then(res => res.json())
 
 	return (
 		<>
