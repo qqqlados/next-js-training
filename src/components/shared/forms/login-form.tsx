@@ -33,7 +33,7 @@ export function LoginForm() {
 		if (Object.keys(form.formState.errors).length === 0) {
 			setCookie('User', data.email)
 			router.push('/feed')
-		}
+		} else setLoading(false)
 	}
 
 	return (

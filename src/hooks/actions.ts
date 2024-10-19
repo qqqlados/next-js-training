@@ -102,7 +102,7 @@ export async function isPostLiked(postId: string | undefined) {
 			},
 		})
 
-		return isLiked!.id
+		return isLiked ? isLiked.id : null
 	} catch (e) {
 		console.error(e)
 	}
@@ -116,7 +116,7 @@ export async function isPostDisliked(postId: string | undefined) {
 			},
 		})
 
-		return isDisliked!.id
+		return isDisliked ? isDisliked.id : null
 	} catch (e) {
 		console.error(e)
 	}
