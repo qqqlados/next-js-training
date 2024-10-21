@@ -3,7 +3,6 @@ import { PostsList } from '@/components/shared/posts/posts-list'
 import { SearchInput } from '@/ui'
 import dynamic from 'next/dynamic'
 import { PostListSkeletons } from '@/components/ui/skeletons'
-import { cookies } from 'next/headers'
 
 const CreatePostModal = dynamic(() => import('@/components/ui/modals/create-post'), { ssr: false })
 
