@@ -296,3 +296,45 @@ export async function deletePost(postId?: string) {
 		console.error(err)
 	}
 }
+
+export async function updateProfileInfo({
+	currentUserId,
+	updatedUsername,
+	updatedTelephone,
+	updatedWebsite,
+}: {
+	currentUserId?: string
+	updatedUsername?: string
+	updatedTelephone?: string
+	updatedWebsite?: string
+}) {
+	try {
+		await prisma.user.update({
+			where: {
+				id: currentUserId,
+			},
+			data: {
+				username: updatedUsername,
+				phone: updatedTelephone,
+				website: updatedWebsite,
+			},
+		})
+
+		revalidateTag('currentUser')
+	} catch (err) {
+		console.error(err)
+	}
+}
+
+export async function getPostsQuantity({ userId }: { userId?: string }) {
+	try {
+		const posts = await prisma.post.count({
+			where: {
+				userId,
+			},
+		})
+		return posts
+	} catch (err) {
+		console.error(err)
+	}
+}

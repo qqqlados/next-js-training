@@ -7,10 +7,15 @@ export const RegistrationFormSchema = z
 			.min(6, { message: 'Email must contain minimum 6 characters' })
 			.max(30, { message: 'Email must not exceed 20 characters' })
 			.email(),
+		fullName: z
+			.string()
+			.min(8, { message: 'Full name must contain minimum 6 characters' })
+			.max(30, { message: 'Full name must not exceed 20 characters' })
+			.regex(/^[A-Za-z]+\s[A-Za-z]+$/, { message: 'Full name must contain exactly two words separated by a space' }),
 		username: z
 			.string()
 			.min(5, { message: 'Username must contain minimum 5 characters' })
-			.max(12, { message: 'Username must not exceed 12 characters' }),
+			.max(15, { message: 'Username must not exceed 15 characters' }),
 		password: z
 			.string()
 			.min(8, { message: 'Password must contain minimum 8 characters' })
@@ -47,3 +52,24 @@ export const CreatePostSchema = z.object({
 })
 
 export type CreatePostValues = z.infer<typeof CreatePostSchema>
+
+const websiteRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*\.(?:net|com|org|info|biz|edu|gov|mil|tv|online|shop|site|cloud|app)$/i
+
+export const ProfileInfoSchema = z.object({
+	username: z
+		.string()
+		.min(5, { message: 'Username must contain minimum 5 characters' })
+		.max(15, { message: 'Username must not exceed 15 characters' }),
+	telephone: z
+		.string()
+		.min(7, { message: 'Phone number must contain minimum 7 characters' })
+		.max(20, { message: 'Phone number cannot exceed 20 characters' })
+		.regex(/^\+?\d{10,12}$/, { message: 'Please, type phone numbers' }),
+	website: z
+		.string()
+		.min(7, { message: 'Website name must contain minimum 7 characters' })
+		.max(20, { message: 'Website name must not exceed 23 characters' })
+		.regex(websiteRegex, 'Incorrect website name'),
+})
+
+export type ProfileInfoValues = z.infer<typeof ProfileInfoSchema>

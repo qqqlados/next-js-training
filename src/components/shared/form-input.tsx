@@ -8,7 +8,7 @@ type Props = {
 	text?: string
 	name: string
 	placeholder?: string
-	type: 'text' | 'password' | 'checkbox' | 'radio'
+	type: 'text' | 'password' | 'checkbox' | 'radio' | 'tel'
 	className?: string
 }
 

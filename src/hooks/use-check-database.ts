@@ -43,7 +43,6 @@ export async function useCheckLogin({
 		| undefined
 }) {
 	try {
-		// const user = res?.find(user => user?.email === email)
 		if (!userIsPresent) {
 			if (name === 'email') {
 				setError('email', { type: 'manual', message: 'Email not found' })

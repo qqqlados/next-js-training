@@ -39,8 +39,13 @@ export function RegistrationForm() {
 		<FormProvider {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className='relative max-w-[400px] w-full mx-auto' autoComplete='off'>
 				<FormInput type='text' name='email' text='Your email' placeholder='example-user@gmail.com' />
+
+				<FormInput type='text' name='fullName' text='Your full name' placeholder='Sebastian Moore' />
+
 				<FormInput type='text' name='username' text='Your username' placeholder='rabbit-234' />
+
 				<FormInput type='password' name='password' text='Your password' />
+
 				<FormInput type='password' name='confirmPassword' text='Repeat your password' />
 
 				<div className='flex items-center justify-between'>
