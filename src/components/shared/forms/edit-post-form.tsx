@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { closeModal } from '@/lib/utils/utils'
 import Loading from '@/app/loading-component'
 import { IPost } from '@/lib/interfaces/post.interface'
+import { toast, Toaster } from 'sonner'
 
 export function EditPostForm({ userEmail, postData }: { userEmail?: string; postData?: IPost }) {
 	const [loading, setLoading] = useState(false)
@@ -19,13 +20,21 @@ export function EditPostForm({ userEmail, postData }: { userEmail?: string; post
 		resolver: zodResolver(CreatePostSchema),
 	})
 
-	const { handleSubmit, reset } = form
+	const { handleSubmit, reset, watch } = form
 
-	async function onSubmit() {
+	const isFormChanged = (): boolean => {
+		return watch('title') !== postData?.title || watch('body') !== postData?.body
+	}
+
+	async function onSubmit(data: CreatePostValues) {
 		setLoading(true)
 		const userId = await getCurrentUserId(userEmail)
 
-		await updatePost({ postId: postData?.id, userId, title: form.getValues('title'), body: form.getValues('body') })
+		toast.promise(updatePost({ postId: postData?.id, userId, title: form.getValues('title'), body: form.getValues('body') }), {
+			loading: 'Editing post...',
+			success: 'Post updated successfully',
+			error: 'Failed to update the post',
+		})
 
 		closeModal('edit_post')
 		setLoading(false)
@@ -48,7 +57,7 @@ export function EditPostForm({ userEmail, postData }: { userEmail?: string; post
 
 					<Textarea name='body' label='Type post description' placeholder='I just walked out and saw that...' />
 
-					<FormInputSubmit text='Edit post' className='mt-8 block mx-auto' />
+					<FormInputSubmit text='Edit post' className='mt-8 block mx-auto' disabled={!isFormChanged()} />
 				</form>
 			</FormProvider>
 			{loading && (

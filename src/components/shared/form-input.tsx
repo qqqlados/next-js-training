@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form'
 import clsx from 'clsx'
 
 type Props = {
-	text?: string
+	text?: string | JSX.Element
 	name: string
 	placeholder?: string
 	type: 'text' | 'password' | 'checkbox' | 'radio' | 'tel'

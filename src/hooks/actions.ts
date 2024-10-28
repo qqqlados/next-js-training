@@ -30,7 +30,6 @@ export async function getUserCredentials({ email }: { email?: string }) {
 
 		return userIsPresent
 	} catch (err) {
-		// return { message: 'Network error' }
 		console.error(err)
 	}
 }
@@ -63,18 +62,6 @@ export async function getUsernameByPostId(userId?: string) {
 		return user
 	} catch (e) {
 		console.error(e)
-	}
-}
-
-export async function getPostsInModal() {
-	try {
-		const posts: IPost[] = await fetch(`${API_URL}/posts`).then(res => res.json())
-
-		return { posts: posts || [] }
-	} catch (err) {
-		console.error(err)
-
-		return { posts: [] }
 	}
 }
 
@@ -321,19 +308,6 @@ export async function updateProfileInfo({
 		})
 
 		revalidateTag('currentUser')
-	} catch (err) {
-		console.error(err)
-	}
-}
-
-export async function getPostsQuantity({ userId }: { userId?: string }) {
-	try {
-		const posts = await prisma.post.count({
-			where: {
-				userId,
-			},
-		})
-		return posts
 	} catch (err) {
 		console.error(err)
 	}

@@ -6,6 +6,7 @@ import { getUsernameByPostId } from '@/hooks/actions'
 import { PostBottomSkeleton, PostExpandedSkeleton } from '../../ui/skeletons'
 import { Suspense } from 'react'
 import { PostBottomRow } from './post-bottom-row'
+import { Toaster } from 'sonner'
 
 export async function PostExpanded({ postId, userEmail }: { postId?: string; userEmail?: string }) {
 	const post: IPost = await fetch(`${API_URL}/posts/${postId}`, {
@@ -44,6 +45,8 @@ export async function PostExpanded({ postId, userEmail }: { postId?: string; use
 			<Suspense fallback={<PostBottomSkeleton />}>
 				<PostBottomRow post={post} userEmail={userEmail} />
 			</Suspense>
+
+			<Toaster position='top-center' />
 		</div>
 	)
 }

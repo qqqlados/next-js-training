@@ -12,7 +12,7 @@ import Loading from '@/app/loading-component'
 import { IPost } from '@/lib/interfaces/post.interface'
 import { IUser } from '@/lib/interfaces/user.interface'
 import { useCheckRegister } from '@/hooks'
-import { Star } from 'lucide-react'
+import { revalidateTag } from 'next/cache'
 
 export function EditProfileForm({ user }: { user?: IUser }) {
 	const [loading, setLoading] = useState(false)
@@ -23,13 +23,21 @@ export function EditProfileForm({ user }: { user?: IUser }) {
 		resolver: zodResolver(ProfileInfoSchema),
 	})
 
-	const { handleSubmit, reset } = form
+	const { handleSubmit, reset, watch } = form
+
+	const isFormChanged = (): boolean => {
+		return watch('username') !== user?.username || watch('telephone') !== user?.phone || watch('website') !== user?.website
+	}
+
+	const wasUsernameChanged = watch('username') !== user?.username
 
 	async function onSubmit() {
 		setLoading(true)
 		const userId = await getCurrentUserId(user?.email)
 
-		await useCheckRegister({ name: 'username', value: form.getValues('username'), setError: form.setError })
+		if (wasUsernameChanged) {
+			await useCheckRegister({ name: 'username', value: form.getValues('username'), setError: form.setError })
+		}
 
 		if (Object.keys(form.formState.errors).length === 0) {
 			await updateProfileInfo({
@@ -43,8 +51,6 @@ export function EditProfileForm({ user }: { user?: IUser }) {
 		closeModal('edit_profile')
 		setLoading(false)
 	}
-
-	console.log(form.getValues('website'))
 
 	useEffect(() => {
 		if (user) {
@@ -62,19 +68,34 @@ export function EditProfileForm({ user }: { user?: IUser }) {
 				<form className='relative' onSubmit={handleSubmit(onSubmit)}>
 					<FormInput name='username' type='text' placeholder='What a beautiful day!' text='Write your new username' />
 
-					{!phoneInput && (
-						<p onClick={() => showPhoneInput(true)} className='flex gap-1 absolute right-0 top-0 underline'>
-							Add phone number*
-						</p>
-					)}
-
 					{phoneInput && (
-						<FormInput name='telephone' type='tel' placeholder='+380123456789' text={`${phoneInput ? 'Change' : 'Add'} your telephone number`} />
+						<FormInput
+							name='telephone'
+							type='tel'
+							placeholder='+380123456789'
+							text={
+								<>
+									{`${Boolean(user?.phone) ? 'Change' : 'Add'} your telephone number `}
+									<span style={{ color: 'red' }}>*</span>
+								</>
+							}
+						/>
 					)}
 
-					<FormInput name='website' type='text' placeholder='instagram.com' text='Type your company website (optional)' />
+					<div className='relative'>
+						<FormInput name='website' type='text' placeholder='instagram.com' text='Type your company website (optional)' />
 
-					<FormInputSubmit text='Save profile' className='mt-8 block mx-auto' />
+						{!phoneInput && (
+							<div className='flex gap-1 absolute right-0 bottom-[-30px] '>
+								<p onClick={() => showPhoneInput(prev => !prev)} className='text-md underline cursor-pointer'>
+									Add phone number
+								</p>
+								<span className='text-red-500 no-underline'>*</span>
+							</div>
+						)}
+					</div>
+
+					<FormInputSubmit text='Save profile' className='mt-8 block mx-auto' disabled={!isFormChanged()} />
 				</form>
 			</FormProvider>
 			{loading && (

@@ -62,9 +62,9 @@ export const ProfileInfoSchema = z.object({
 		.max(15, { message: 'Username must not exceed 15 characters' }),
 	telephone: z
 		.string()
-		.min(7, { message: 'Phone number must contain minimum 7 characters' })
+		.min(13, { message: 'Phone number must contain minimum 13 characters including your country code' })
 		.max(20, { message: 'Phone number cannot exceed 20 characters' })
-		.regex(/^\+?\d{10,12}$/, { message: 'Please, type phone numbers' }),
+		.regex(/^\+\d+$/, { message: 'Please, type a valid phone number using plus symbol and only digits' }),
 	website: z
 		.string()
 		.min(7, { message: 'Website name must contain minimum 7 characters' })
