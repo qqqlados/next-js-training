@@ -1,7 +1,7 @@
 import Loading from '@/app/loading-component'
 import { ProfileHeader } from '@/components/shared/profile/profile-header'
 import { PostsList } from '@/components/shared/posts/posts-list'
-import { PostListSkeletons } from '@/components/ui/skeletons'
+import { PostListSkeletons, ProfileHeaderSkeleton } from '@/components/ui/skeletons'
 import { getCurrentUserId } from '@/hooks/actions'
 import { cookies } from 'next/headers'
 import { Suspense } from 'react'
@@ -16,7 +16,7 @@ export default async function MyProfile() {
 	return (
 		<div>
 			<div className='h-[150px] relative'>
-				<Suspense fallback={<Loading />}>
+				<Suspense fallback={<ProfileHeaderSkeleton />}>
 					<ProfileHeader userId={userId} />
 				</Suspense>
 			</div>

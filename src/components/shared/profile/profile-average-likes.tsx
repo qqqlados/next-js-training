@@ -2,7 +2,6 @@ import { API_URL } from '@/app/config'
 import { IPost } from '@/lib/interfaces/post.interface'
 import { ThumbsUp } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
-import Sonner from './sonner'
 
 export async function ProfileAverageLikes({ userId }: { userId?: number }) {
 	const response = await fetch(`${API_URL}/users/${userId}/posts`)
@@ -23,7 +22,6 @@ export async function ProfileAverageLikes({ userId }: { userId?: number }) {
 			<p className='flex gap-1 items-center'>
 				Average number of likes: {averageLikes.toPrecision(2)} <ThumbsUp />{' '}
 			</p>
-			<Sonner />
 		</div>
 	)
 }

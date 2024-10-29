@@ -19,13 +19,9 @@ export async function ProfileHeader({ userId }: { userId?: string }) {
 		<div className='flex items-center w-[90%] px-20 relative'>
 			<ProfileInfo currentUser={currentUser} />
 
-			<Suspense fallback={<div>Loading...</div>}>
-				<ProfilePostsLength userId={userId} />
-			</Suspense>
+			<ProfilePostsLength userId={userId} />
 
-			<Suspense fallback={<div>Loading...</div>}>
-				<ProfileAverageLikes userId={currentUser?.id} />
-			</Suspense>
+			<ProfileAverageLikes userId={currentUser?.id} />
 
 			<EditProfileModal user={currentUser} className='absolute right-0 top-0' />
 		</div>
