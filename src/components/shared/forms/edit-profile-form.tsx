@@ -1,18 +1,16 @@
 'use client'
 
-import { getCurrentUserId, updatePost, updateProfileInfo } from '@/hooks/actions'
+import { getCurrentUserId, updateProfileInfo } from '@/hooks/actions'
 import { FormInput } from '../form-input'
-import { FormInputSubmit, Textarea } from '@/components/ui'
-import { CreatePostSchema, CreatePostValues, ProfileInfoSchema, ProfileInfoValues } from '@/lib/interfaces/form.interface'
+import { FormInputSubmit } from '@/components/ui'
+import { ProfileInfoSchema, ProfileInfoValues } from '@/lib/interfaces/form.interface'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { closeModal } from '@/lib/utils/utils'
 import Loading from '@/app/loading-component'
-import { IPost } from '@/lib/interfaces/post.interface'
 import { IUser } from '@/lib/interfaces/user.interface'
 import { useCheckRegister } from '@/hooks'
-import { revalidateTag } from 'next/cache'
 
 export function EditProfileForm({ user }: { user?: IUser }) {
 	const [loading, setLoading] = useState(false)

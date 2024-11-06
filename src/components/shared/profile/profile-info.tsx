@@ -1,7 +1,5 @@
-import { API_URL } from '@/app/config'
 import { IUser } from '@/lib/interfaces/user.interface'
 import { CircleUserRound } from 'lucide-react'
-import { Suspense } from 'react'
 
 export function ProfileInfo({ currentUser }: { currentUser?: IUser }) {
 	return (

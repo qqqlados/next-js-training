@@ -24,7 +24,6 @@ export async function PostsList({
 	if (userId) url = `${API_URL}/userPosts/${userId}`
 
 	const posts: IPost[] = await fetch(url, {
-		cache: 'no-store',
 		next: {
 			tags: ['posts'],
 		},
