@@ -6,13 +6,11 @@ import { FormInputSubmit, Textarea } from '@/components/ui'
 import { CreatePostSchema, CreatePostValues } from '@/lib/interfaces/form.interface'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useCheckUser } from '@/lib/utils'
 import { useEffect, useState } from 'react'
-import { revalidateTag } from 'next/cache'
 import { closeModal } from '@/lib/utils/utils'
 import Loading from '@/app/loading-component'
 
-export function CreatePostForm() {
+export function CreatePostForm(userId: string) {
 	const [loading, setLoading] = useState(false)
 
 	const form = useForm<CreatePostValues>({
@@ -26,13 +24,10 @@ export function CreatePostForm() {
 		formState: { isSubmitSuccessful },
 	} = form
 
-	const { user } = useCheckUser()
-
 	async function onSubmit() {
 		setLoading(true)
-		const userIdObject = await getCurrentUserId(user)
 
-		await addPost({ userId: userIdObject!, title: form.getValues('title'), body: form.getValues('body') })
+		await addPost({ userId, title: form.getValues('title'), body: form.getValues('body') })
 
 		setLoading(false)
 

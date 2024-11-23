@@ -1,7 +1,5 @@
-import { FieldValues, UseFormSetError } from 'react-hook-form'
-import { IUser } from '@/lib/interfaces/user.interface'
-import { LoginFormValues } from '@/lib/interfaces/form.interface'
-import { getUserCredentials, getUsers } from './actions'
+import { UseFormSetError } from 'react-hook-form'
+import { getUsers } from './actions'
 
 type Props = {
 	name: string
@@ -17,47 +15,6 @@ export async function useCheckRegister({ name, value, setError }: Props) {
 
 		if (isDataPresent) {
 			setError(name, { type: 'manual', message: `${name.charAt(0).toUpperCase() + name.slice(1)} already exists` })
-		}
-	} catch (e: any) {
-		console.error(e)
-	}
-}
-
-export async function useCheckLogin({
-	name,
-	email,
-	password,
-	setError,
-	userIsPresent,
-}: {
-	name: 'email' | 'password'
-	email?: string
-	password?: string
-	setError: UseFormSetError<LoginFormValues>
-	userIsPresent:
-		| {
-				email: string
-				password: string
-		  }
-		| null
-		| undefined
-}) {
-	try {
-		if (!userIsPresent) {
-			if (name === 'email') {
-				setError('email', { type: 'manual', message: 'Email not found' })
-			} else if (name === 'password') {
-				setError('password', { type: 'manual', message: 'Incorrect password' })
-			}
-			return
-		}
-
-		if (email && email !== userIsPresent!.email) {
-			setError(name, { type: 'manual', message: `Email not found` })
-		}
-
-		if (password && password !== userIsPresent!.password) {
-			setError(name, { type: 'manual', message: `Incorrect password` })
 		}
 	} catch (e: any) {
 		console.error(e)

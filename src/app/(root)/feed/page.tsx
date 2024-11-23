@@ -3,6 +3,7 @@ import { PostsList } from '@/components/shared/posts/posts-list'
 import { SearchInput, Skeleton } from '@/ui'
 import dynamic from 'next/dynamic'
 import { PostListSkeletons } from '@/components/ui/skeletons'
+import { auth } from '@/app/auth'
 
 const CreatePostModal = dynamic(() => import('@/components/ui/modals/create-post'), {
 	loading: () => <Skeleton className='w-full h-full bg-gray-200'></Skeleton>,
@@ -14,8 +15,14 @@ export async function generateMetadata({ searchParams }: { searchParams: { [key:
 	}
 }
 
-export default function Feed({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export default async function Feed({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
 	const searchValue = searchParams.search
+
+	const session = await auth()
+
+	if (!session) {
+		return <div>Please log in to access the dashboard.</div>
+	}
 
 	return (
 		<>

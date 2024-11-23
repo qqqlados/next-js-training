@@ -6,12 +6,12 @@ import { Pen, StickyNote } from 'lucide-react'
 
 export async function PostsList({
 	searchValue,
-	emailParam,
+	currentUserEmail,
 	userId,
 	flex,
 }: {
 	searchValue?: string
-	emailParam?: string
+	currentUserEmail?: string
 	userId?: string
 	flex?: boolean
 }) {
@@ -19,7 +19,7 @@ export async function PostsList({
 
 	if (searchValue) url = `${API_URL}/posts?searchValue=${searchValue}`
 
-	if (emailParam) url = `${API_URL}/myPosts/${emailParam}`
+	if (currentUserEmail) url = `${API_URL}/myPosts/${currentUserEmail}`
 
 	if (userId) url = `${API_URL}/userPosts/${userId}`
 
@@ -35,7 +35,7 @@ export async function PostsList({
 				<List flex={flex}>
 					{posts.map(post => (
 						<CardItem flex={flex} key={post?.id}>
-							<PostBody userEmail={emailParam} post={post} />
+							<PostBody post={post} />
 						</CardItem>
 					))}
 				</List>

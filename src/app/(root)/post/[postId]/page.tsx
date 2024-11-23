@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { PostExpandedSkeleton } from '@/components/ui/skeletons'
 import { API_URL } from '@/app/config'
 import { IPost } from '@/lib/interfaces/post.interface'
+import { auth } from '@/app/auth'
 
 export async function generateMetadata({ params }: { params: { postId: string } }) {
 	const post: IPost = await fetch(`${API_URL}/posts/${params?.postId}`).then(res => res.json())
@@ -13,7 +14,11 @@ export async function generateMetadata({ params }: { params: { postId: string } 
 	}
 }
 
-export default function Post({ params }: { params: { postId: string } }) {
+export default async function Post({ params }: { params: { postId: string } }) {
+	// const session = await auth()
+
+	// const userId = session!.user
+
 	const cookieStore = cookies()
 
 	const userEmail = cookieStore.get('User')?.value

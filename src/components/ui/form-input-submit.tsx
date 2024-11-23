@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import { useFormContext } from 'react-hook-form'
 
-export function FormInputSubmit({ text, disabled, className }: { text: string; disabled?: boolean; className?: string }) {
+export function FormInputSubmit({ text, className }: { text: string; className?: string }) {
 	const {
 		formState: { errors, isValid },
 	} = useFormContext()
@@ -13,15 +13,7 @@ export function FormInputSubmit({ text, disabled, className }: { text: string; d
 			type='submit'
 			className={clsx('btn btn-active btn-neutral', className)}
 			value={text}
-			disabled={
-				isValid && Object.keys(errors).length == 0 && disabled == undefined
-					? false
-					: isValid && Object.keys(errors).length == 0 && disabled == false
-					? false
-					: disabled
-					? true
-					: undefined
-			}
+			disabled={isValid && Object.keys(errors).length == 0 ? false : true}
 		/>
 	)
 }

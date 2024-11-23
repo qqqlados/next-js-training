@@ -3,8 +3,6 @@
 import { prisma } from '../../prisma/prisma-client'
 import { revalidateTag } from 'next/cache'
 import { RegistrationFormValues } from '@/lib/interfaces/form.interface'
-import { API_URL } from '@/app/config'
-import { IPost } from '@/lib/interfaces/post.interface'
 
 export async function getUsers() {
 	try {
@@ -16,13 +14,14 @@ export async function getUsers() {
 	}
 }
 
-export async function getUserCredentials({ email }: { email?: string }) {
+export async function getUserCredentials(email?: string) {
 	try {
 		const userIsPresent = await prisma.user.findUnique({
 			where: {
 				email,
 			},
 			select: {
+				id: true,
 				email: true,
 				password: true,
 			},

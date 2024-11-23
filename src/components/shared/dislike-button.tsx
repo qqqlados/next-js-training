@@ -7,7 +7,7 @@ import { useDebounceClickingLikes } from '@/lib/utils'
 import { ThumbsDown } from 'lucide-react'
 import { useState } from 'react'
 
-export function DislikeButton({ userEmail, post }: { userEmail?: string; post: IPost }) {
+export function DislikeButton({ userId, post }: { userId?: string; post: IPost }) {
 	const { isDisliked, toggleDislike, dislikes, isInitiallyDisliked } = useLikeDislikeContext()
 
 	const [action, setAction] = useState<boolean | null>(null)
@@ -21,8 +21,6 @@ export function DislikeButton({ userEmail, post }: { userEmail?: string; post: I
 	useDebounceClickingLikes(
 		action,
 		async () => {
-			const userId = await getCurrentUserId(userEmail)
-
 			if (isDisliked !== isInitiallyDisliked) {
 				if (isDisliked) {
 					await addDislike(post.id, userId!)

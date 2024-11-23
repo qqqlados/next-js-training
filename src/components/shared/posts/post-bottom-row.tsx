@@ -1,7 +1,7 @@
 import { IPost } from '@/lib/interfaces/post.interface'
-import { LikesArea } from '@/ui'
+import { LikesArea } from '@/components/shared'
 
-export async function PostBottomRow({ post, userEmail }: { post: IPost; userEmail?: string }) {
+export async function PostBottomRow({ post }: { post: IPost }) {
 	return (
 		<section className='flex justify-between items-center mt-4'>
 			<div>
@@ -18,7 +18,7 @@ export async function PostBottomRow({ post, userEmail }: { post: IPost; userEmai
 			</div>
 
 			<div className='mr-[50px]'>
-				<LikesArea userEmail={userEmail} post={post} />
+				<LikesArea post={post} />
 			</div>
 		</section>
 	)

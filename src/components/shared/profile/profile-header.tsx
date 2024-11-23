@@ -5,18 +5,19 @@ import { ProfilePostsLength } from './profile-posts-length'
 import { ProfileInfo } from './profile-info'
 import dynamic from 'next/dynamic'
 import { Skeleton } from '@/components/ui'
+import { auth } from '@/app/auth'
 
 const EditProfileModal = dynamic(() => import('../../ui/modals/edit-profile'), {
 	loading: () => <Skeleton className='w-full h-full rounded-lg bg-gray-200'></Skeleton>,
 })
 
-export async function ProfileHeader({ userId }: { userId?: string }) {
-	const currentUser: IUser = await fetch(`${API_URL}/users/${userId}`, {
-		cache: 'force-cache',
-		next: {
-			tags: ['currentUser'],
-		},
-	}).then(res => res.json())
+export async function ProfileHeader() {
+	const session = await auth()
+
+	//@ts-ignore
+	const userId = session!.user!.id!
+
+	const currentUser: IUser = await fetch(`${API_URL}/users/${userId}`).then(res => res.json())
 
 	return (
 		<div className='flex items-center w-[90%] px-20 relative'>
@@ -27,11 +28,11 @@ export async function ProfileHeader({ userId }: { userId?: string }) {
 			</div>
 
 			<div className='flex-grow flex justify-center'>
-				<ProfileAverageLikes userId={currentUser?.id} />
+				<ProfileAverageLikes userId={userId} />
 			</div>
 
 			<div className='absolute right-0 top-0 w-[58px] h-[48px]'>
-				<EditProfileModal user={currentUser} />
+				<EditProfileModal user={userId} />
 			</div>
 		</div>
 	)

@@ -7,8 +7,6 @@ import DeletePostModal from '@/components/ui/modals/delete-post'
 export async function PostTitleRow({ post, userEmail }: { post: IPost; userEmail?: string }) {
 	const currentUser = await getCurrentUserId(userEmail)
 
-	console.log(post)
-
 	const user = await getUsernameByPostId(post?.userId.toString())
 
 	return (

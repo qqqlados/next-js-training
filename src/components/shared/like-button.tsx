@@ -5,9 +5,10 @@ import { useLikeDislikeContext } from '@/lib/contexts/like-dislike-context'
 import { IPost } from '@/lib/interfaces/post.interface'
 import { useDebounceClickingLikes } from '@/lib/utils'
 import { ThumbsUp } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
-export function LikeButton({ userEmail, post }: { userEmail?: string; post: IPost }) {
+export function LikeButton({ userId, post }: { userId?: string; post: IPost }) {
 	const [action, setAction] = useState<boolean | null>(null)
 
 	const { isLiked, toggleLike, likes, isInitiallyLiked } = useLikeDislikeContext()
@@ -21,8 +22,6 @@ export function LikeButton({ userEmail, post }: { userEmail?: string; post: IPos
 	useDebounceClickingLikes(
 		action,
 		async () => {
-			const userId = await getCurrentUserId(userEmail)
-
 			if (isLiked !== isInitiallyLiked) {
 				if (isLiked) {
 					await addLike(post.id, userId!)

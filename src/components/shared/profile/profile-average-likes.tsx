@@ -8,11 +8,13 @@ export async function ProfileAverageLikes({ userId }: { userId?: number }) {
 	const posts: IPost[] = await response.json()
 
 	const averageLikes =
-		posts
-			?.map(post => post.likes)
-			.reduce((acc, cur) => {
-				return (acc += cur)
-			}, 0) / posts.length
+		posts?.length > 0
+			? posts
+					?.map(post => post.likes)
+					.reduce((acc, cur) => {
+						return (acc += cur)
+					}, 0) / posts.length
+			: 0
 
 	return (
 		<p className='flex gap-1 items-center'>

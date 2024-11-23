@@ -3,7 +3,7 @@ import { IPost } from '@/lib/interfaces/post.interface'
 import Link from 'next/link'
 import { PostTitleRow } from './post-title-row'
 import { getUsernameByPostId } from '@/hooks/actions'
-import { PostBottomSkeleton, PostExpandedSkeleton } from '../../ui/skeletons'
+import { PostBottomSkeleton } from '../../ui/skeletons'
 import { Suspense } from 'react'
 import { PostBottomRow } from './post-bottom-row'
 import { Toaster } from 'sonner'
@@ -43,7 +43,7 @@ export async function PostExpanded({ postId, userEmail }: { postId?: string; use
 			</div>
 
 			<Suspense fallback={<PostBottomSkeleton />}>
-				<PostBottomRow post={post} userEmail={userEmail} />
+				<PostBottomRow post={post} />
 			</Suspense>
 
 			<Toaster position='top-center' />
