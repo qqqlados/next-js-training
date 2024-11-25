@@ -15,13 +15,9 @@ export async function generateMetadata({ params }: { params: { postId: string } 
 }
 
 export default async function Post({ params }: { params: { postId: string } }) {
-	// const session = await auth()
+	const session = await auth()
 
-	// const userId = session!.user
-
-	const cookieStore = cookies()
-
-	const userEmail = cookieStore.get('User')?.value
+	const userEmail = session!.user!.email!
 
 	return (
 		<div className='flex justify-center'>

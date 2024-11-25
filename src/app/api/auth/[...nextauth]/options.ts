@@ -60,6 +60,10 @@ export const options: NextAuthOptions = {
 			return session
 		},
 	},
+	pages: {
+		signIn: '/auth', // Кастомна адреса авторизації
+		error: '/auth', // У випадку помилки перенаправляйте на ту саму сторінку
+	},
 	session: {
 		strategy: 'jwt',
 		maxAge: 60 * 60 * 12,
