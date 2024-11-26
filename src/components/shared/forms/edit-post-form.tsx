@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { closeModal } from '@/lib/utils/utils'
 import Loading from '@/app/loading-component'
 import { IPost } from '@/lib/interfaces/post.interface'
-import { toast, Toaster } from 'sonner'
+import { toast } from 'sonner'
 
 export function EditPostForm({ userEmail, postData }: { userEmail?: string; postData?: IPost }) {
 	const [loading, setLoading] = useState(false)
@@ -30,11 +30,7 @@ export function EditPostForm({ userEmail, postData }: { userEmail?: string; post
 		setLoading(true)
 		const userId = await getCurrentUserId(userEmail)
 
-		toast.promise(updatePost({ postId: postData?.id, userId, title: form.getValues('title'), body: form.getValues('body') }), {
-			loading: 'Editing post...',
-			success: 'Post updated successfully',
-			error: 'Failed to update the post',
-		})
+		await updatePost({ postId: postData?.id, userId, title: data?.title, body: data?.body })
 
 		closeModal('edit_post')
 		setLoading(false)

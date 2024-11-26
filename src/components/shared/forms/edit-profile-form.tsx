@@ -19,6 +19,11 @@ export function EditProfileForm({ user }: { user?: IUser }) {
 	const form = useForm<ProfileInfoValues>({
 		mode: 'onChange',
 		resolver: zodResolver(ProfileInfoSchema),
+		defaultValues: {
+			username: '',
+			telephone: '',
+			website: '',
+		},
 	})
 
 	const { handleSubmit, reset, watch } = form
@@ -54,8 +59,8 @@ export function EditProfileForm({ user }: { user?: IUser }) {
 		if (user) {
 			reset({
 				username: user?.username,
-				telephone: user?.phone,
-				website: user?.website,
+				telephone: user?.phone || '',
+				website: user?.website || '',
 			})
 		}
 	}, [user, reset])
@@ -64,7 +69,7 @@ export function EditProfileForm({ user }: { user?: IUser }) {
 		<>
 			<FormProvider {...form}>
 				<form className='relative' onSubmit={handleSubmit(onSubmit)}>
-					<FormInput name='username' type='text' placeholder='What a beautiful day!' text='Write your new username' />
+					<FormInput name='username' type='text' placeholder='johnny345' text='Write your new username' />
 
 					{phoneInput && (
 						<FormInput
@@ -81,7 +86,7 @@ export function EditProfileForm({ user }: { user?: IUser }) {
 					)}
 
 					<div className='relative'>
-						<FormInput name='website' type='text' placeholder='instagram.com' text='Type your company website (optional)' />
+						<FormInput name='website' type='text' placeholder='instagram.com' text='Type your company website' />
 
 						{!phoneInput && (
 							<div className='flex gap-1 absolute right-0 bottom-[-30px] '>

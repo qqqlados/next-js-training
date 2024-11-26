@@ -32,7 +32,7 @@ export async function ProfileHeader() {
 			</div>
 
 			<div className='absolute right-0 top-0 w-[58px] h-[48px]'>
-				<EditProfileModal user={userId} />
+				<EditProfileModal user={currentUser} />
 			</div>
 		</div>
 	)

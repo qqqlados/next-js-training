@@ -4,6 +4,8 @@ import { PostListSkeletons, ProfileHeaderSkeleton } from '@/components/ui/skelet
 import { Suspense } from 'react'
 import { Metadata } from 'next'
 import { auth } from '@/app/auth'
+import { signOut } from 'next-auth/react'
+import { LogoutButton } from '@/components/ui'
 
 export const metadata: Metadata = {
 	title: 'My Profile | Next.js Training',
@@ -14,7 +16,7 @@ export default async function MyProfile() {
 	const session = await auth()
 
 	//@ts-ignore
-	const currentUserEmail = session!.user!.id!
+	const currentUserEmail = session!.user!.email!
 
 	return (
 		<div>
@@ -28,6 +30,8 @@ export default async function MyProfile() {
 					<PostsList currentUserEmail={currentUserEmail} />
 				</Suspense>
 			</div>
+
+			<LogoutButton className='absolute right-10 top-5 ' />
 		</div>
 	)
 }

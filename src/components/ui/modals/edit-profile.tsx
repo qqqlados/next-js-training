@@ -1,6 +1,5 @@
 'use client'
 
-import { EditPostForm } from '@/components/shared/forms/edit-post-form'
 import { showModal } from '@/lib/utils/utils'
 import { Pencil } from 'lucide-react'
 import clsx from 'clsx'
