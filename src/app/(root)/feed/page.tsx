@@ -20,10 +20,8 @@ export default async function Feed({ searchParams }: { searchParams: { [key: str
 	const searchValue = searchParams.search
 
 	const session = await auth()
-
-	if (!session) {
-		return <div>Please log in to access the dashboard.</div>
-	}
+	//@ts-ignore
+	const userId = session!.user!.id! as string
 
 	return (
 		<>
@@ -31,7 +29,7 @@ export default async function Feed({ searchParams }: { searchParams: { [key: str
 				<SearchInput className='w-[400px]' placeholder='Search for posts...' />
 
 				<div className='absolute right-10 top-0 w-[114px] h-[48px] rounded-xl'>
-					<CreatePostModal />
+					<CreatePostModal userId={userId} />
 				</div>
 			</div>
 

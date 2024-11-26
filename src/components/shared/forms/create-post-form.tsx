@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { closeModal } from '@/lib/utils/utils'
 import Loading from '@/app/loading-component'
 
-export function CreatePostForm(userId: string) {
+export function CreatePostForm({ userId }: { userId: string }) {
 	const [loading, setLoading] = useState(false)
 
 	const form = useForm<CreatePostValues>({

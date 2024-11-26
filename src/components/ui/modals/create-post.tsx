@@ -4,7 +4,7 @@ import { CreatePostForm } from '@/components/shared/forms'
 import { showModal } from '@/lib/utils/utils'
 import Modal from './modal'
 
-export default function CreatePostModal({ className }: { className?: string }) {
+export default function CreatePostModal({ userId, className }: { userId: string; className?: string }) {
 	return (
 		<div className={className}>
 			<button className='btn' onClick={() => showModal('create_post')}>
@@ -12,7 +12,7 @@ export default function CreatePostModal({ className }: { className?: string }) {
 			</button>
 
 			<Modal id='create_post'>
-				<CreatePostForm />
+				<CreatePostForm userId={userId} />
 			</Modal>
 		</div>
 	)
