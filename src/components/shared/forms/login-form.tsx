@@ -36,7 +36,7 @@ export function LoginForm({ openRegistrationForm }: { openRegistrationForm: () =
 			} else {
 				toast.success('You have successfully logged in')
 
-				router.push(`/feed`)
+				router.push(`${process.env.NEXTAUTH_URL}/feed`)
 			}
 		} catch (err) {
 			throw new Error()
