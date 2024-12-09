@@ -1,6 +1,6 @@
 'use client'
 
-import { addDislike, getCurrentUserId, removeDislike } from '@/hooks/actions'
+import { addDislike, removeDislike } from '@/hooks/actions'
 import { useLikeDislikeContext } from '@/lib/contexts/like-dislike-context'
 import { IPost } from '@/lib/interfaces/post.interface'
 import { useDebounceClickingLikes } from '@/lib/utils'

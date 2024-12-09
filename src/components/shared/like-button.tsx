@@ -1,11 +1,10 @@
 'use client'
 
-import { addLike, removeLike, getCurrentUserId, isPostLiked } from '@/hooks/actions'
+import { addLike, removeLike } from '@/hooks/actions'
 import { useLikeDislikeContext } from '@/lib/contexts/like-dislike-context'
 import { IPost } from '@/lib/interfaces/post.interface'
 import { useDebounceClickingLikes } from '@/lib/utils'
 import { ThumbsUp } from 'lucide-react'
-import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 export function LikeButton({ userId, post }: { userId?: string; post: IPost }) {
