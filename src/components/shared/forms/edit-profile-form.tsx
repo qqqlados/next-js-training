@@ -19,11 +19,6 @@ export function EditProfileForm({ user }: { user?: IUser }) {
 	const form = useForm<ProfileInfoValues>({
 		mode: 'onChange',
 		resolver: zodResolver(ProfileInfoSchema),
-		defaultValues: {
-			username: '',
-			telephone: '',
-			website: '',
-		},
 	})
 
 	const { handleSubmit, reset, watch } = form

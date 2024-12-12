@@ -40,8 +40,6 @@ export function LoginForm({ openRegistrationForm }: { openRegistrationForm: () =
 			}
 		} catch (err) {
 			throw new Error()
-		} finally {
-			setLoading(false)
 		}
 	}
 

@@ -29,7 +29,7 @@ export function LikeButton({ userId, post }: { userId?: string; post: IPost }) {
 				}
 			}
 		},
-		1500
+		750
 	)
 
 	return (
