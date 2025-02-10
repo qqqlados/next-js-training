@@ -13,7 +13,6 @@ export async function UserInfo({ userId }: { userId: string }) {
 			<p>{user?.username}</p>
 			<p>{user?.name}</p>
 			<p>{user?.phone}</p>
-			<p>{user?.website}</p>
 		</>
 	)
 }
