@@ -46,7 +46,7 @@ export const options: NextAuthOptions = {
 			if (user) {
 				token.id = user.id
 				token.email = user.email
-				token.token = jwt.sign({ id: user.id, email: user.email }, process.env.NEXTAUTH_SECRET!, { expiresIn: '12h' })
+				token.token = jwt.sign({ id: user.id, email: user.email }, process.env.NEXTAUTH_SECRET!, { expiresIn: '24h' })
 			}
 			return token
 		},
@@ -61,12 +61,12 @@ export const options: NextAuthOptions = {
 		},
 	},
 	pages: {
-		signIn: '/auth', // Кастомна адреса авторизації
-		error: '/auth', // У випадку помилки перенаправляйте на ту саму сторінку
+		signIn: '/auth',
+		error: '/auth',
 	},
 	session: {
 		strategy: 'jwt',
-		maxAge: 60 * 60 * 12,
+		maxAge: 60 * 60 * 24,
 	},
 	jwt: {
 		secret: process.env.NEXTAUTH_SECRET,

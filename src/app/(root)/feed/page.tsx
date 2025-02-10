@@ -3,7 +3,7 @@ import { PostsList } from '@/components/shared/posts/posts-list'
 import { SearchInput, Skeleton } from '@/ui'
 import dynamic from 'next/dynamic'
 import { PostListSkeletons } from '@/components/ui/skeletons'
-import { auth } from '@/app/auth'
+import { auth } from '@/app/auth/auth'
 import { getToken } from 'next-auth/jwt'
 
 const CreatePostModal = dynamic(() => import('@/components/ui/modals/create-post'), {

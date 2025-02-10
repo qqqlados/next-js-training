@@ -4,7 +4,7 @@ import { CircleUserRound } from 'lucide-react'
 export function ProfileInfo({ currentUser }: { currentUser?: IUser }) {
 	return (
 		<div className='basis-[500px] flex gap-3 items-center '>
-			<CircleUserRound width={150} height={150} stroke='#302f2f' />
+			{currentUser?.imageUrl ? <img src={currentUser?.imageUrl} /> : <CircleUserRound width={150} height={150} stroke='#302f2f' />}
 
 			<div className=''>
 				<p className='text-2xl font-semibold'>{currentUser?.name}</p>

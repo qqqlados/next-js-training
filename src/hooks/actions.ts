@@ -286,13 +286,11 @@ export async function deletePost(postId?: string) {
 export async function updateProfileInfo({
 	currentUserId,
 	updatedUsername,
-	updatedTelephone,
-	updatedWebsite,
+	updatedImage,
 }: {
 	currentUserId?: string
 	updatedUsername?: string
-	updatedTelephone?: string
-	updatedWebsite?: string
+	updatedImage?: string
 }) {
 	try {
 		await prisma.user.update({
@@ -301,8 +299,7 @@ export async function updateProfileInfo({
 			},
 			data: {
 				username: updatedUsername,
-				phone: updatedTelephone,
-				website: updatedWebsite,
+				imageUrl: updatedImage || undefined,
 			},
 		})
 

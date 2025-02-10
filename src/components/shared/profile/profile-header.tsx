@@ -5,7 +5,7 @@ import { ProfilePostsLength } from './profile-posts-length'
 import { ProfileInfo } from './profile-info'
 import dynamic from 'next/dynamic'
 import { Skeleton } from '@/components/ui'
-import { auth } from '@/app/auth'
+import { auth } from '@/app/auth/auth'
 
 const EditProfileModal = dynamic(() => import('../../ui/modals/edit-profile'), {
 	loading: () => <Skeleton className='w-full h-full rounded-lg bg-gray-200'></Skeleton>,

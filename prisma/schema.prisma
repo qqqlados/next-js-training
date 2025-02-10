@@ -51,9 +51,8 @@ model User {
   name          String?
   username      String
   email         String         @unique
-  phone         String?
-  website       String?
   password      String         @default("default_password")
+  imageUrl      String?
   posts         Post[]
   likedPosts    LikedPost[]
   dislikedPosts DislikedPost[]

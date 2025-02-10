@@ -53,23 +53,11 @@ export const CreatePostSchema = z.object({
 
 export type CreatePostValues = z.infer<typeof CreatePostSchema>
 
-const websiteRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*\.(?:net|com|org|info|biz|edu|gov|mil|tv|online|shop|site|cloud|app)$/i
-
 export const ProfileInfoSchema = z.object({
 	username: z
 		.string()
 		.min(5, { message: 'Username must contain minimum 5 characters' })
 		.max(15, { message: 'Username must not exceed 15 characters' }),
-	telephone: z
-		.string()
-		.min(13, { message: 'Phone number must contain minimum 13 characters including your country code' })
-		.max(20, { message: 'Phone number cannot exceed 20 characters' })
-		.regex(/^\+\d+$/, { message: 'Please, type a valid phone number using plus symbol and only digits' }),
-	website: z
-		.string()
-		.min(7, { message: 'Website name must contain minimum 7 characters' })
-		.max(20, { message: 'Website name must not exceed 23 characters' })
-		.regex(websiteRegex, 'Incorrect website name'),
 })
 
 export type ProfileInfoValues = z.infer<typeof ProfileInfoSchema>

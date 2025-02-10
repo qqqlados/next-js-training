@@ -3,7 +3,7 @@ import { PostsList } from '@/components/shared/posts/posts-list'
 import { PostListSkeletons, ProfileHeaderSkeleton } from '@/components/ui/skeletons'
 import { Suspense } from 'react'
 import { Metadata } from 'next'
-import { auth } from '@/app/auth'
+import { auth } from '@/app/auth/auth'
 import { signOut } from 'next-auth/react'
 import { LogoutButton } from '@/components/ui'
 

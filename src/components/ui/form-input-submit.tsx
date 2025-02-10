@@ -10,7 +10,5 @@ export function FormInputSubmit({ text, disabled, className }: { text: string; d
 
 	const isFormValid = isValid && Object.keys(errors).length === 0
 
-	console.log(errors)
-
 	return <input type='submit' className={clsx('btn btn-active btn-neutral', className)} value={text} disabled={!isFormValid || disabled} />
 }

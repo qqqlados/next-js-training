@@ -1,4 +1,3 @@
-import { IUser } from '@/lib/interfaces/user.interface'
 import { prisma } from '../../../../../prisma/prisma-client'
 import { NextResponse } from 'next/server'
 

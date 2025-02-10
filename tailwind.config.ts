@@ -8,6 +8,15 @@ const config: Config = {
 	},
 	theme: {
 		extend: {
+			keyframes: {
+				destroyImage: {
+					'0%': { transform: 'scale(1)', opacity: '1', visibility: 'visible' },
+					'100%': { transform: 'scale(0)', opacity: '0', visibility: 'hidden' },
+				},
+			},
+			animation: {
+				destroyImage: 'destroyImage .1s linear forwards',
+			},
 			gridTemplateRows: {
 				custom: '27px minmax(auto, 1fr) 40px',
 			},

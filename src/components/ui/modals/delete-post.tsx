@@ -1,13 +1,11 @@
 'use client'
 
-import { showModal } from '@/lib/utils/utils'
-import { Trash2 } from 'lucide-react'
-import clsx from 'clsx'
 import Modal from './modal'
 import { deletePost } from '@/hooks/actions'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Loading from '@/app/loading-component'
+import { DeleteButton } from '../buttons/delete-button'
 
 export default function DeletePostModal({ postId, className }: { postId?: string; className?: string }) {
 	const [loading, setLoading] = useState(false)
@@ -29,9 +27,7 @@ export default function DeletePostModal({ postId, className }: { postId?: string
 
 	return (
 		<div className={className}>
-			<button className={clsx('btn w-30', className)} onClick={() => showModal('delete_post')}>
-				<Trash2 />
-			</button>
+			<DeleteButton modalName='delete_post' />
 
 			<Modal id='delete_post'>
 				<div className='h-[130px] flex flex-col items-center gap-5'>
