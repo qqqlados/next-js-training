@@ -144,30 +144,6 @@ export async function addLike(postId: string, userId: string) {
 	}
 }
 
-export async function removeLike(postId: string) {
-	try {
-		await prisma.likedPost.delete({
-			where: {
-				postId: postId,
-			},
-		})
-
-		await prisma.post.update({
-			where: {
-				id: postId,
-			},
-			data: {
-				likes: { decrement: 1 },
-				likedPostId: null,
-			},
-		})
-
-		revalidateTag(`post-${postId}`)
-	} catch (e) {
-		console.error(e)
-	}
-}
-
 export async function addDislike(postId: string, userId: string) {
 	try {
 		const newDislikedPost = await prisma.dislikedPost.create({
